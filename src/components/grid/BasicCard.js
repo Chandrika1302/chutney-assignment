@@ -4,13 +4,10 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { Button } from "@mui/material";
-// import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import FormHelperText from '@mui/material/FormHelperText';
-import { useState } from 'react';
 
 
 import './BasicCard.css';
@@ -22,25 +19,23 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 200,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
+export default function BasicCard() { 
+  function handleSubmit(e) {
+    e.preventDefault()
+    const {name,phoneNumber} = e.target.elements
+    console.log({name: name.value });
+    console.log({number:phoneNumber.value });
+    console.log(e.target.Item.innerText);
+  }
 
+  function handleAdd(){
+    return(
+      <div>hi</div>
+    )
 
-
-export default function BasicCard() {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  }
   
+
   return (
     <div><Box sx={{ flexGrow: 1 }} style={{margin:40}}>
     <Grid container spacing={{ xs: 2, md: 6 }} columns={{ xs: 4, sm: 8, md: 12 }}>
@@ -48,34 +43,28 @@ export default function BasicCard() {
         <Grid item xs={2} sm={4} md={4} key={index}>
           <Item className='item'>{index+1}
           <div>
-          <Button variant="contained" onClick={handleOpen}>Add</Button>
-            </div></Item>
-        </Grid>
-      ))}
-    </Grid>
-  </Box>
-  <div>
-      <Modal
-        open={open}
-        onClose={handleClose}
-      >
-        <Box sx={style}>
+          <Box>
+        <form onSubmit={handleSubmit}>
         <FormControl required>
           <InputLabel htmlFor='name'>Name</InputLabel>
-          <Input id='username' type='text'></Input>
+          <Input id='name' type='text' ></Input>
           <FormHelperText><span className='red'>required</span></FormHelperText>
         </FormControl><br/>
 
         <FormControl required>
           <InputLabel htmlFor='phoneNumber'>Number</InputLabel>
-          <Input id='phoneNumber' type='number'></Input>
+          <Input id='phoneNumber' type='number' ></Input>
           <FormHelperText><span className='red'>required</span></FormHelperText>
         </FormControl><br/><br/>
-        <Button variant='contained' color='primary'>Submit</Button>
+        <Button variant="contained" onClick={handleAdd}>Add</Button>
+        </form>
         </Box>
-      </Modal>
+            </div></Item>
+        </Grid>
+      ))}
+    </Grid>
+  </Box>
+  
     </div>
-    </div>
-    
   );
 }
